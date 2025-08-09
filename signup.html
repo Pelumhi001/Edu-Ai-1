@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edu AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #121212;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      color: #f5f5f5;
+    }
+
+    /* Animated Background Elements */
+    .bg-flow {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .flow-circle {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.15;
+      animation: float 15s infinite linear;
+    }
+
+    .flow-circle:nth-child(1) {
+      width: 500px;
+      height: 500px;
+      background: #5d8eff;
+      top: -100px;
+      left: -100px;
+      animation-delay: 0s;
+    }
+
+    .flow-circle:nth-child(2) {
+      width: 800px;
+      height: 800px;
+      background: #8a2be2;
+      bottom: -200px;
+      right: -200px;
+      animation-delay: 3s;
+    }
+
+    .flow-circle:nth-child(3) {
+      width: 600px;
+      height: 600px;
+      background: #00bfff;
+      top: 50%;
+      left: 50%;
+      animation-delay: 6s;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translate(0, 0);
+      }
+      25% {
+        transform: translate(50px, 50px);
+      }
+      50% {
+        transform: translate(0, 100px);
+      }
+      75% {
+        transform: translate(-50px, 50px);
+      }
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+
+    /* Particles */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    /* Container with logo notch */
+    .container {
+      background: rgba(30, 30, 30, 0.8);
+      width: 90%;
+      max-width: 400px;
+      padding: 30px;
+      padding-top: 50px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(10px);
+      animation: fadeIn 0.8s ease-out;
+      margin-top: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Logo positioned on container border */
+    .logo {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      text-align: center;
+    }
+    .logo img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      background: rgba(30, 30, 30, 0.8);
+      box-shadow: 0 4px 30px rgba(93, 142, 255, 0.3);
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+
+    /* Form Styles */
+    h1 {
+      color: #5d8eff;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #b0b0b0;
+      font-size: 14px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.3s;
+      color: #f5f5f5;
+    }
+    input:focus {
+      border-color: #5d8eff;
+      box-shadow: 0 0 0 2px rgba(93, 142, 255, 0.2);
+      outline: none;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Password Toggle */
+    .password-toggle {
+      position: absolute;
+      right: 10px;
+      top: 35px;
+      cursor: pointer;
+      color: #666;
+    }
+    .password-toggle:hover {
+      color: #5d8eff;
+    }
+
+    /* Shining Button */
+    .shine-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .shine-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 45%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 55%
+      );
+      transform: rotate(30deg);
+      animation: shine 3s infinite;
+    }
+    @keyframes shine {
+      0% { left: -50%; top: -50%; }
+      100% { left: 150%; top: 150%; }
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #signup-button {
+      background: #5d8eff;
+    }
+    #signup-button:hover {
+      background: #3a6bdb;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(93, 142, 255, 0.3);
+    }
+
+    /* OTP Verification Button */
+    #verify-otp {
+      background: #28a745;
+      margin-top: 10px;
+    }
+    #verify-otp:hover {
+      background: #218838;
+    }
+
+    /* Google Button Styles */
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      color: #b0b0b0;
+      font-size: 14px;
+    }
+    .divider::before, .divider::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .divider::before {
+      margin-right: 10px;
+    }
+    .divider::after {
+      margin-left: 10px;
+    }
+    
+    #googleSignIn {
+      background: rgba(255, 255, 255, 0.1);
+      color: #f5f5f5;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    #googleSignIn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .google-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #b0b0b0;
+    }
+    .login-link a {
+      color: #5d8eff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin-left: 10px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Modern Alert Notification System */
+    .alert-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 350px;
+      z-index: 10000;
+    }
+    
+    .custom-alert {
+      position: relative;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      color: white;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      transform: translateX(400px);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .custom-alert.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    
+    .custom-alert.success {
+      background: linear-gradient(135deg, rgba(46, 204, 113, 0.9), rgba(39, 174, 96, 0.9));
+    }
+    
+    .custom-alert.error {
+      background: linear-gradient(135deg, rgba(231, 76, 60, 0.9), rgba(192, 57, 43, 0.9));
+    }
+    
+    .custom-alert.info {
+      background: linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(41, 128, 185, 0.9));
+    }
+    
+    .alert-icon {
+      font-size: 28px;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    
+    .alert-content {
+      flex: 1;
+    }
+    
+    .alert-title {
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 4px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    .alert-message {
+      font-size: 14px;
+      opacity: 0.9;
+      line-height: 1.4;
+    }
+    
+    .close-alert {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      cursor: pointer;
+      margin-left: 12px;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    
+    .close-alert:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
+    }
+    
+    .alert-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.4);
+      width: 100%;
+    }
+    
+    .alert-progress-bar {
+      height: 100%;
+      background: white;
+      animation: progressBar linear forwards;
+    }
+    
+    @keyframes progressBar {
+      from { width: 100%; }
+      to { width: 0%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background Elements -->
+  <div class="bg-flow">
+    <div class="flow-circle"></div>
+    <div class="flow-circle"></div>
+    <div class="flow-circle"></div>
+  </div>
+  
+  <!-- Particles JS -->
+  <div id="particles-js"></div>
+
+  <!-- Sign-Up Container -->
+  <div class="container">
+    <div class="logo">
+      <img src="My logo.png" alt="Edu AI Logo">
+    </div>
+
+    <h1>Create Your Edu AI Account</h1>
+    
+    <div class="input-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="Pelumi...">
+    </div>
+    
+    <div class="input-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="your@email.com">
+    </div>
+    
+    <div class="input-group">
+      <label for="password">Password (6+ characters)</label>
+      <input type="password" id="password" placeholder="••••••">
+      <span class="password-toggle" id="togglePassword">👁️</span>
+    </div>
+    
+    <button id="signup-button" class="shine-btn">
+      <span id="button-text">Sign Up</span>
+      <div id="spinner" class="spinner"></div>
+    </button>
+
+    <div class="divider">OR</div>
+    
+    <button id="googleSignIn">
+      <img src="Google icon.png" class="google-icon" alt="Google logo">
+      <span id="google-button-text">Continue with Google</span>
+      <div id="google-spinner" class="spinner"></div>
+    </button>
+    
+    <p class="login-link">
+      Already have an account? <a href="login.html">Log In</a>
+    </p>
+  </div>
+
+  <!-- Modern Alert Container -->
+  <div class="alert-container" id="alertContainer"></div>
+
+  <!-- Firebase SDK (v9 Modular) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+    import { 
+      getAuth, 
+      createUserWithEmailAndPassword,
+      GoogleAuthProvider,
+      signInWithPopup
+    } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDVmf5yUdelbdSIS4tzsqzZPMinRIS83Zg",
+      authDomain: "edu-ai-80f8b.firebaseapp.com",
+      projectId: "edu-ai-80f8b",
+      storageBucket: "edu-ai-80f8b.appspot.com",
+      messagingSenderId: "772978059940",
+      appId: "1:772978059940:web:9f69aff4388a55009fd431",
+      measurementId: "G-M435KPL1E4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Email format validator
+    function isValidEmail(email) {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailPattern.test(email);
+    }
+
+    // Complete signup
+    async function completeSignup() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        showAlert('success', 'Welcome!', `Account created for ${name}!`);
+        setTimeout(() => window.location.href = "dashboard.html", 2000);
+      } catch (error) {
+        let message = "Signup failed. Please try again.";
+        if (error.code === "auth/email-already-in-use") {
+          message = "Email already registered";
+        } else if (error.code === "auth/invalid-email") {
+          message = "Invalid email address";
+        }
+        showAlert('error', 'Error', message);
+      } finally {
+        resetSignupButton();
+      }
+    }
+
+    // Reset signup button state
+    function resetSignupButton() {
+      document.getElementById("button-text").textContent = "Sign Up";
+      document.getElementById("spinner").style.display = "none";
+      document.getElementById("signup-button").disabled = false;
+    }
+
+    // Alert System
+    function showAlert(type, title, message, duration = 3000) {
+      const alertContainer = document.getElementById('alertContainer');
+      const alert = document.createElement('div');
+      alert.className = `custom-alert ${type}`;
+      let icon = 'ℹ️';
+      if (type === 'success') icon = '✨';
+      if (type === 'error') icon = '⚠️';
+
+      alert.innerHTML = `
+        <span class="alert-icon">${icon}</span>
+        <div class="alert-content">
+          <div class="alert-title">${title}</div>
+          <div class="alert-message">${message}</div>
+        </div>
+        <button class="close-alert">&times;</button>
+        <div class="alert-progress">
+          <div class="alert-progress-bar" style="animation-duration: ${duration}ms"></div>
+        </div>
+      `;
+
+      alertContainer.appendChild(alert);
+      setTimeout(() => alert.classList.add('show'), 10);
+
+      setTimeout(() => {
+        alert.classList.remove('show');
+        setTimeout(() => alert.remove(), 500);
+      }, duration);
+
+      alert.querySelector('.close-alert').addEventListener('click', () => {
+        alert.classList.remove('show');
+        setTimeout(() => alert.remove(), 500);
+      });
+    }
+
+    // Password toggle
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
+    togglePassword.addEventListener('click', () => {
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      togglePassword.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+    });
+
+    // Signup button handler
+    document.getElementById("signup-button").addEventListener("click", async () => {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      // Field checks
+      if (!name || !email || !password) {
+        showAlert('error', 'Missing Fields', 'Please fill all fields!');
+        return;
+      }
+
+      // Email format validation
+      if (!isValidEmail(email)) {
+        showAlert('error', 'Invalid Email', 'Please enter a valid email address!');
+        return;
+      }
+
+      // Password check
+      if (password.length < 6) {
+        showAlert('error', 'Weak Password', 'Password must be at least 6 characters');
+        return;
+      }
+
+      // Show loading
+      document.getElementById("button-text").textContent = "Creating Account...";
+      document.getElementById("spinner").style.display = "inline-block";
+      document.getElementById("signup-button").disabled = true;
+
+      try {
+        await completeSignup();
+      } catch (error) {
+        showAlert('error', 'Error', 'Failed to create account');
+        resetSignupButton();
+      }
+    });
+
+    // Google Sign-In
+    document.getElementById("googleSignIn").addEventListener("click", async () => {
+      try {
+        document.getElementById("google-button-text").textContent = "Signing In...";
+        document.getElementById("google-spinner").style.display = "inline-block";
+        document.getElementById("googleSignIn").disabled = true;
+
+        const provider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, provider);
+
+        showAlert('success', 'Welcome!', `Signed in as ${result.user.displayName || 'User'}`);
+        setTimeout(() => window.location.href = "dashboard.html", 2000);
+      } catch (error) {
+        showAlert('error', 'Google Sign-In Failed', error.message);
+      } finally {
+        document.getElementById("google-button-text").textContent = "Continue with Google";
+        document.getElementById("google-spinner").style.display = "none";
+        document.getElementById("googleSignIn").disabled = false;
+      }
+    });
+  </script>
+
+  <!-- Particles.js Library -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    // Initialize particles.js
+    document.addEventListener('DOMContentLoaded', function() {
+      particlesJS('particles-js', {
+        "particles": {
+          "number": {
+            "value": 80,
+            "density": {
+              "enable": true,
+              "value_area": 800
+            }
+          },
+          "color": {
+            "value": "#5d8eff"
+          },
+          "shape": {
+            "type": "circle",
+            "stroke": {
+              "width": 0,
+              "color": "#000000"
+            },
+            "polygon": {
+              "nb_sides": 5
+            }
+          },
+          "opacity": {
+            "value": 0.3,
+            "random": true,
+            "anim": {
+              "enable": false,
+              "speed": 1,
+              "opacity_min": 0.1,
+              "sync": false
+            }
+          },
+          "size": {
+            "value": 3,
+            "random": true,
+            "anim": {
+              "enable": false,
+              "speed": 40,
+              "size_min": 0.1,
+              "sync": false
+            }
+          },
+          "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#5d8eff",
+            "opacity": 0.2,
+            "width": 1
+          },
+          "move": {
+            "enable": true,
+            "speed": 2,
+            "direction": "none",
+            "random": true,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false,
+            "attract": {
+              "enable": false,
+              "rotateX": 600,
+              "rotateY": 1200
+            }
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": {
+              "enable": true,
+              "mode": "grab"
+            },
+            "onclick": {
+              "enable": true,
+              "mode": "push"
+            },
+            "resize": true
+          },
+          "modes": {
+            "grab": {
+              "distance": 140,
+              "line_linked": {
+                "opacity": 0.5
+              }
+            },
+            "push": {
+              "particles_nb": 4
+            }
+          }
+        },
+        "retina_detect": true
+      });
+    });
+  </script>
+</body>
+</html>
